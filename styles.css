@@ -5,18 +5,27 @@ body {
     background-color: #f4f4f4; /* Light background color */
 }
 header {
-    background-color: #FFA500; /* Changed to orange */
+    background-color: #FFA500; /* Orange header */
     color: white;
-    width: 100%;
-    text-align: center;
+    text-align: center; /* Center the text */
     padding: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+#cart-container {
+    display: flex;
+    justify-content: center; /* Center the cart section */
+    margin-top: 10px; /* Space between header and cart */
+}
 #cart {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 1.2em;
+    font-size: 1.5em; /* Increase font size for visibility */
+    padding: 10px 20px; /* Add padding to cart for spacing */
+    background-color: #ff7f50; /* Coral background for cart */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for hover effect */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+#cart:hover {
+    background-color: #ff6f40; /* Darken on hover */
 }
 main {
     display: flex;
@@ -55,7 +64,7 @@ main {
     color: #555;
 }
 .add-to-cart {
-    background-color: #FFA500; /* Changed to orange */
+    background-color: #FFA500; /* Orange button */
     color: white;
     border: none;
     padding: 10px 15px;
