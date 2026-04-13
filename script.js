@@ -1,11 +1,4 @@
 let cartItems = [];
-// Show welcome popup on page load
-window.onload = function() {
-    document.getElementById('welcome-popup').style.display = "flex"; // Show the popup
-};
-document.getElementById('proceed-button').addEventListener('click', function() {
-    document.getElementById('welcome-popup').style.display = "none"; // Hide the popup
-});
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productElement = button.parentElement;
