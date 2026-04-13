@@ -1,9 +1,10 @@
 let cartItems = [];
+// Event listeners for "Add to Cart" buttons
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productElement = button.parentElement;
         const productName = productElement.dataset.name;
-        const productPrice = parseFloat(productElement.dataset.price);
+        const productPrice = parseInt(productElement.dataset.price, 10); // Using parseInt for price without decimals
         addToCart(productName, productPrice);
         updateCartDisplay();
     });
@@ -17,30 +18,35 @@ function addToCart(name, price) {
         cartItems.push({ name, price, quantity: 1 });
     }
 }
-// Update the cart display count
+// Function to update the cart display count
 function updateCartDisplay() {
     const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
     document.getElementById('cart-count').textContent = cartCount;
 }
-// Show modal
+// Show the cart modal with items
 function showCartModal() {
     const cartModal = document.getElementById('cart-modal');
     const modalContent = document.querySelector('.modal-content');
-    modalContent.innerHTML = '<span class="close">&times;</span>';
-    cartItems.forEach(item => {
-        modalContent.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>;
-    });
-    const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    modalContent.innerHTML += <div class="cart-item"><strong>Total: NT$ ${total}</strong></div>;
+    modalContent.innerHTML = '<span class="close">&times;</span>'; // Clear previous content
+    // Populate modal with cart items
+    if (cartItems.length === 0) {
+        modalContent.innerHTML += <div class="cart-item">Your cart is empty.</div>;
+    } else {
+        cartItems.forEach(item => {
+            modalContent.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>;
+        });
+        const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        modalContent.innerHTML += <div class="cart-item"><strong>Total: NT$ ${total}</strong></div>;
+    }
+    // Display the modal
     cartModal.style.display = "block";
 }
-// Close modal
+// Event listener to show cart modal when clicking the cart summary
+document.getElementById('cart').addEventListener('click', showCartModal);
+// Close modal functionality
 document.addEventListener('click', (event) => {
-    if (event.target.matches('#cart')) {
-        showCartModal();
-    }
     if (event.target.matches('.close') || event.target.matches('#cart-modal')) {
         document.getElementById('cart-modal').style.display = "none";
     }
 });
-<div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div><div class="cart-item"><strong>Total: NT$ ${total}</strong></div>
+<div class="cart-item">Your cart is empty.</div><div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div><div class="cart-item"><strong>Total: NT$ ${total}</strong></div>
