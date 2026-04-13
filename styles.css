@@ -117,3 +117,36 @@ strong {
     font-size: 1.2em; /* Total price font size */
     color: #333;
 }
+/* Popup styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.proceed-btn {
+    background-color: #FFA500; /* Orange button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.2s;
+}
+.proceed-btn:hover {
+    background-color: #ff8c00; /* Darker shade of orange on hover */
+}
