@@ -38,9 +38,14 @@ main {
 .product:hover {
     transform: translateY(-5px); /* Raise product card on hover */
 }
+.product-image {
+    width: 100%;
+    height: auto; /* Keep image aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+}
 .product h2 {
     font-size: 1.8em;
-    margin: 0;
+    margin: 10px 0; /* Add spacing above and below the heading */
     color: #333;
     font-weight: bold;
 }
@@ -112,4 +117,3 @@ strong {
     font-size: 1.2em; /* Total price font size */
     color: #333;
 }
-
