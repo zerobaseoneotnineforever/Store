@@ -8,11 +8,9 @@
 </head>
 <body>
     <header>
-        <h1>Small Market for Drinks</h1> <!-- Updated header -->
-        <div id="cart-container">
-            <div id="cart">
-                <span>Cart: <span id="cart-count">0</span> items</span>
-            </div>
+        <h1>Small Market for Drinks</h1>
+        <div id="cart">
+            <span>Cart: <span id="cart-count">0</span> items</span>
         </div>
     </header>
     <main>
@@ -40,7 +38,8 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Your Cart</h2>
-            <!-- Cart Items will be populated here dynamically -->
+            <div id="cart-items"></div> <!-- Cart items will be populated here dynamically -->
+            <div id="cart-total"></div> <!-- Total price -->
         </div>
     </div>
     <script src="script.js"></script>
