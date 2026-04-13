@@ -29,7 +29,7 @@ function updateCartDisplay() {
     const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
     document.getElementById('cart-count').textContent = cartCount;
 }
-// Show cart modal
+// Show modal
 function showCartModal() {
     const cartModal = document.getElementById('cart-modal');
     const modalContent = document.querySelector('.modal-content');
