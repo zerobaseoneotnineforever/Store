@@ -7,25 +7,16 @@ body {
 header {
     background-color: #FFA500; /* Orange header */
     color: white;
-    text-align: center; /* Center the text */
+    width: 100%;
+    text-align: center;
     padding: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-#cart-container {
-    display: flex;
-    justify-content: center; /* Center the cart section */
-    margin-top: 10px; /* Space between header and cart */
-}
 #cart {
-    font-size: 1.5em; /* Increase font size for visibility */
-    padding: 10px 20px; /* Add padding to cart for spacing */
-    background-color: #ff7f50; /* Coral background for cart */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor for hover effect */
-    transition: background-color 0.3s; /* Smooth background transition */
-}
-#cart:hover {
-    background-color: #ff6f40; /* Darken on hover */
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 1.2em;
 }
 main {
     display: flex;
@@ -113,10 +104,6 @@ main {
 }
 .cart-item {
     margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
 }
 h2 {
     font-size: 1.5em; /* Header font size */
