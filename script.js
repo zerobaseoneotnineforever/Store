@@ -4,7 +4,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productElement = button.parentElement;
         const productName = productElement.dataset.name;
-        const productPrice = parseInt(productElement.dataset.price, 10); // Using parseInt for price without decimals
+        const productPrice = parseInt(productElement.dataset.price, 10); // Convert to integer
         addToCart(productName, productPrice);
         updateCartDisplay();
     });
@@ -26,17 +26,20 @@ function updateCartDisplay() {
 // Show the cart modal with items
 function showCartModal() {
     const cartModal = document.getElementById('cart-modal');
-    const modalContent = document.querySelector('.modal-content');
-    modalContent.innerHTML = '<span class="close">&times;</span>'; // Clear previous content
+    const cartItemsDisplay = document.getElementById('cart-items');
+    const cartTotalDisplay = document.getElementById('cart-total');
+    // Clear previous content
+    cartItemsDisplay.innerHTML = '';
+    cartTotalDisplay.innerHTML = '';
     // Populate modal with cart items
     if (cartItems.length === 0) {
-        modalContent.innerHTML += <div class="cart-item">Your cart is empty.</div>;
+        cartItemsDisplay.innerHTML = <div class="cart-item">Your cart is empty.</div>;
     } else {
         cartItems.forEach(item => {
-            modalContent.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>;
+            cartItemsDisplay.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>;
         });
         const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        modalContent.innerHTML += <div class="cart-item"><strong>Total: NT$ ${total}</strong></div>;
+        cartTotalDisplay.innerHTML = <strong>Total: NT$ ${total}</strong>;
     }
     // Display the modal
     cartModal.style.display = "block";
@@ -49,4 +52,4 @@ document.addEventListener('click', (event) => {
         document.getElementById('cart-modal').style.display = "none";
     }
 });
-<div class="cart-item">Your cart is empty.</div><div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div><div class="cart-item"><strong>Total: NT$ ${total}</strong></div>
+<div class="cart-item">Your cart is empty.</div><div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div><strong>Total: NT$ ${total}</strong>
