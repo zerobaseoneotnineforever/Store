@@ -1,4 +1,11 @@
 let cartItems = [];
+// Show welcome popup on page load
+window.onload = function() {
+    document.getElementById('welcome-popup').style.display = "flex"; // Show the popup
+};
+document.getElementById('proceed-button').addEventListener('click', function() {
+    document.getElementById('welcome-popup').style.display = "none"; // Hide the popup
+});
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', () => {
         const productElement = button.parentElement;
@@ -22,16 +29,16 @@ function updateCartDisplay() {
     const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
     document.getElementById('cart-count').textContent = cartCount;
 }
-// Show modal
+// Show cart modal
 function showCartModal() {
     const cartModal = document.getElementById('cart-modal');
     const modalContent = document.querySelector('.modal-content');
     modalContent.innerHTML = '<span class="close">&times;</span>';
     cartItems.forEach(item => {
-        modalContent.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}</div>;
+        modalContent.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>;
     });
     const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    modalContent.innerHTML += <div class="cart-item"><strong>Total: $${total.toFixed(2)}</strong></div>;
+    modalContent.innerHTML += <div class="cart-item"><strong>Total: NT$ ${total}</strong></div>;
     cartModal.style.display = "block";
 }
 // Close modal
@@ -43,4 +50,4 @@ document.addEventListener('click', (event) => {
         document.getElementById('cart-modal').style.display = "none";
     }
 });
-<div class="cart-item">${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}</div><div class="cart-item"><strong>Total: $${total.toFixed(2)}</strong></div>
+<div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div><div class="cart-item"><strong>Total: NT$ ${total}</strong></div>
