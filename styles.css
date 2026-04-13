@@ -5,7 +5,7 @@ body {
     background-color: #f4f4f4; /* Light background color */
 }
 header {
-    background-color: #4CAF50; /* Green header */
+    background-color: #FFA500; /* Changed to orange */
     color: white;
     width: 100%;
     text-align: center;
@@ -55,7 +55,7 @@ main {
     color: #555;
 }
 .add-to-cart {
-    background-color: #4CAF50;
+    background-color: #FFA500; /* Changed to orange */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -65,7 +65,7 @@ main {
     transition: background-color 0.2s;
 }
 .add-to-cart:hover {
-    background-color: #45a049;
+    background-color: #FF8C00; /* Darker orange on hover */
 }
 /* Modal styles for the cart */
 #cart-modal {
