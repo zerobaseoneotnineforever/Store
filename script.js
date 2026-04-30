@@ -28,19 +28,25 @@ function showCartModal() {
     const cartModal = document.getElementById('cart-modal');
     const cartItemsDisplay = document.getElementById('cart-items');
     const cartTotalDisplay = document.getElementById('cart-total');
+
     // Clear previous content
     cartItemsDisplay.innerHTML = '';
     cartTotalDisplay.innerHTML = '';
+
     // Populate modal with cart items
     if (cartItems.length === 0) {
-        cartItemsDisplay.innerHTML = <div class="cart-item">Your cart is empty.</div>;
+        // Backticks are required here
+        cartItemsDisplay.innerHTML = `<div class="cart-item">Your cart is empty.</div>`;
     } else {
         cartItems.forEach(item => {
-            cartItemsDisplay.innerHTML += <div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>;
+            // Backticks are required here for ${variable} to work
+            cartItemsDisplay.innerHTML += `<div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>`;
         });
         const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cartTotalDisplay.innerHTML = <strong>Total: NT$ ${total}</strong>;
+        // Backticks are required here
+        cartTotalDisplay.innerHTML = `<strong>Total: NT$ ${total}</strong>`;
     }
+
     // Display the modal
     cartModal.style.display = "block";
 }
