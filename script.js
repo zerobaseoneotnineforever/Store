@@ -1,62 +1,67 @@
 let cartItems = [];
 
-// Function to update the number in the header
+// Updates the number in the header
 function updateCartCount() {
-    const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-    document.getElementById('cart-count').textContent = cartCount;
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
 }
 
-// Function to show the modal and its contents
-function updateCartModal() {
-    const cartItemsDisplay = document.getElementById('cart-items');
-    const cartTotalDisplay = document.getElementById('cart-total');
-
-    cartItemsDisplay.innerHTML = '';
-
+// Shows the modal window
+function showCart() {
+    const itemsContainer = document.getElementById('cart-items');
+    const totalContainer = document.getElementById('cart-total');
+    
+    itemsContainer.innerHTML = '';
+    
     if (cartItems.length === 0) {
-        cartItemsDisplay.innerHTML = '<div class="cart-item">Your cart is empty.</div>';
-        cartTotalDisplay.innerHTML = '';
+        itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+        totalContainer.innerHTML = '';
     } else {
         cartItems.forEach(item => {
-            cartItemsDisplay.innerHTML += `<div class="cart-item">${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}</div>`;
+            itemsContainer.innerHTML += `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>${item.name} x${item.quantity}</span>
+                    <span>NT$ ${item.price * item.quantity}</span>
+                </div>`;
         });
-        const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cartTotalDisplay.innerHTML = `<strong>Total: NT$ ${total}</strong>`;
+        const grandTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        totalContainer.innerHTML = `<strong>Total: NT$ ${grandTotal}</strong>`;
     }
+    
+    document.getElementById('cart-modal').style.display = 'block';
 }
 
-// Global Click Listener for all buttons
-document.addEventListener('click', (event) => {
-    // ADD TO CART
-    if (event.target.classList.contains('add-to-cart')) {
-        const productElement = event.target.parentElement;
-        const productName = productElement.dataset.name;
-        const productPrice = parseInt(productElement.dataset.price, 10);
+// THE BUTTON LOGIC
+document.addEventListener('click', function(e) {
+    // 1. Add to Cart Logic
+    if (e.target.classList.contains('add-to-cart')) {
+        const parent = e.target.closest('.product');
+        const name = parent.getAttribute('data-name');
+        const price = parseInt(parent.getAttribute('data-price'));
 
-        const existingItem = cartItems.find(item => item.name === productName);
-        if (existingItem) {
-            existingItem.quantity++;
+        const existing = cartItems.find(i => i.name === name);
+        if (existing) {
+            existing.quantity++;
         } else {
-            cartItems.push({ name: productName, price: productPrice, quantity: 1 });
+            cartItems.push({ name, price, quantity: 1 });
         }
         updateCartCount();
     }
 
-    // OPEN MODAL
-    if (event.target.closest('#cart')) {
-        updateCartModal();
-        document.getElementById('cart-modal').style.display = "block";
+    // 2. Open Cart
+    if (e.target.closest('#cart')) {
+        showCart();
     }
 
-    // CLOSE MODAL
-    if (event.target.matches('.close') || event.target.matches('#cart-modal')) {
-        document.getElementById('cart-modal').style.display = "none";
+    // 3. Close Cart
+    if (e.target.classList.contains('close') || e.target.id === 'cart-modal') {
+        document.getElementById('cart-modal').style.display = 'none';
     }
 
-    // CLEAR CART
-    if (event.target.id === 'clear-cart') {
-        cartItems = []; // Wipe the array
-        updateCartCount(); // Update the top right number
-        updateCartModal(); // Update the list inside the popup
+    // 4. Clear Cart Logic
+    if (e.target.id === 'clear-cart-btn') {
+        cartItems = [];
+        updateCartCount();
+        showCart();
     }
 });
