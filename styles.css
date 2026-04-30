@@ -20,21 +20,22 @@ header {
     cursor: pointer; /* Makes it look clickable */
 }
 main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px;
-    max-width: 1200px; /* Limit the width of the main content */
+    display: grid;
+    /* This creates as many columns as fit, with a minimum width of 250px each */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centers the grid on the screen */
 }
+
 .product {
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: white; /* White background for products */
-    transition: transform 0.2s;
+    /* Remove the margin: 20px; from the old code so the grid handles spacing */
+    margin: 0; 
+    width: auto; /* Let the grid determine the width */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Keeps buttons aligned at the bottom */
 }
 .product:hover {
     transform: translateY(-5px); /* Raise product card on hover */
