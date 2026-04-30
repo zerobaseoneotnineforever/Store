@@ -13,7 +13,8 @@
             <span>Cart: <span id="cart-count">0</span> items</span>
         </div>
     </header>
-    <main>
+
+    <main id="product-grid">
         <div class="product" data-name="Orange Juice" data-price="60">
             <img src="https://golden-goods.com/wp-content/uploads/2022/12/638071123624300000-2.jpg" alt="Orange Juice" class="product-image">
             <h2>Orange Juice</h2>
@@ -33,18 +34,21 @@
             <button class="add-to-cart">Add to Cart</button>
         </div>
     </main>
+
     <div id="cart-modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Your Cart</h2>
             <div id="cart-items"></div>
             <div id="cart-total"></div>
-            <button id="clear-cart">Clear Cart</button>
+            <button id="clear-cart-btn">Clear Cart</button>
         </div>
     </div>
+
     <footer>
         <p>made by Rafa</p>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
