@@ -67,3 +67,15 @@ document.addEventListener('click', (event) => {
         document.getElementById('cart-modal').style.display = "none";
     }
 });
+
+// Function to clear everything
+function clearCart() {
+    if (confirm("Are you sure you want to clear your cart?")) {
+        cartItems = []; // Empty the array
+        updateCartDisplay(); // Reset the header count
+        showCartModal(); // Refresh the modal view (it will show "empty")
+    }
+}
+
+// Add the event listener (put this with your other listeners at the bottom)
+document.getElementById('clear-cart').addEventListener('click', clearCart);
