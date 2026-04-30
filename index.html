@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Real Simple Drink Store</title> <link rel="stylesheet" href="styles.css">
+    <title>A Real Simple Drink Store</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>A Real Simple Drink Store</h1> <div id="cart">
+        <h1>A Real Simple Drink Store</h1>
+        <div id="cart">
             <span>Cart: <span id="cart-count">0</span> items</span>
         </div>
     </header>
 
-    <main>
+    <main id="product-grid">
         <div class="product" data-name="Orange Juice" data-price="60">
             <img src="https://golden-goods.com/wp-content/uploads/2022/12/638071123624300000-2.jpg" alt="Orange Juice" class="product-image">
             <h2>Orange Juice</h2>
@@ -38,10 +40,8 @@
             <span class="close">&times;</span>
             <h2>Your Cart</h2>
             <div id="cart-items"></div>
-           <div id="cart-total"></div>
-<button id="clear-cart" style="margin-top: 20px; background-color: #ff4444; color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px; width: 100%;">
-    Clear Cart
-</button>
+            <div id="cart-total"></div>
+            <button id="clear-cart-btn">Clear Cart</button>
         </div>
     </div>
 
