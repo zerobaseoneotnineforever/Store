@@ -93,25 +93,35 @@ document.addEventListener('click', function(e) {
         showCart();
     }
 
-        // 6. Checkout Logic
+            // 6. Checkout Logic
     if (e.target.id === 'checkout-btn') {
+        const nameInput = document.getElementById('cust-name').value.trim();
+        const emailInput = document.getElementById('cust-email').value.trim();
+    
+        // 1. Validation
         if (cartItems.length === 0) {
             alert("Your cart is empty!");
             return;
         }
+        if (nameInput === "" || emailInput === "") {
+            alert("Please enter your name and email to proceed.");
+            return;
+        }
     
-        // Prepare the order summary text
+        // 2. Prepare order summary
         let orderSummary = cartItems.map(item => 
             `${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}`
         ).join('\n');
     
         const grandTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-        // Fill the hidden form fields
+        // 3. Fill the hidden form
+        document.getElementById('form-name').value = nameInput;
+        document.getElementById('form-email').value = emailInput;
         document.getElementById('form-order-details').value = orderSummary;
         document.getElementById('form-total-price').value = `NT$ ${grandTotal}`;
     
-        // Submit the form
+        // 4. Submit
         document.getElementById('checkout-form').submit();
     }
 });
