@@ -86,9 +86,10 @@ document.addEventListener('click', function(e) {
         document.getElementById('cart-modal').style.display = 'none';
     }
 
-    // 4. Clear Cart Logic
-    if (e.target.id === 'clear-cart-btn') {
+     if (e.target.id === 'clear-cart-btn') {
         cartItems = [];
+        document.getElementById('cust-name').value = ''; // Clear name
+        document.getElementById('cust-email').value = ''; // Clear email
         updateCartCount();
         showCart();
     }
