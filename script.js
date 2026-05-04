@@ -92,4 +92,26 @@ document.addEventListener('click', function(e) {
         updateCartCount();
         showCart();
     }
+
+        // 6. Checkout Logic
+    if (e.target.id === 'checkout-btn') {
+        if (cartItems.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+    
+        // Prepare the order summary text
+        let orderSummary = cartItems.map(item => 
+            `${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}`
+        ).join('\n');
+    
+        const grandTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+        // Fill the hidden form fields
+        document.getElementById('form-order-details').value = orderSummary;
+        document.getElementById('form-total-price').value = `NT$ ${grandTotal}`;
+    
+        // Submit the form
+        document.getElementById('checkout-form').submit();
+    }
 });
