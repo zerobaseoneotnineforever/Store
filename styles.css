@@ -82,6 +82,9 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
+#checkout-btn:hover {
+    background-color: #218838 !important;
+}
 footer {
     text-align: center;
     padding: 20px;
