@@ -53,7 +53,7 @@ main {
 .remove-item:hover {
     background-color: #cc0000 !important;
 }
-/* Modal Styles */
+/* 1. Ensure the modal overlay centers correctly */
 #cart-modal {
     display: none;
     position: fixed;
@@ -63,13 +63,39 @@ main {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.6);
+    /* Add these to help centering on mobile */
+    overflow: hidden; 
 }
+
+/* 2. Fix the size of the white box */
 .modal-content {
     background-color: white;
-    margin: 10% auto;
-    padding: 30px;
+    margin: 5vh auto; /* 5% of viewport height from top */
+    padding: 20px;
     width: 90%;
-    max-width: 400px;
+    max-width: 450px;
+    border-radius: 10px;
+    
+    /* THE FIX: Limit the height and allow inner scrolling */
+    max-height: 85vh; /* Box will never be taller than 85% of screen */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Make ONLY the items scrollable */
+#cart-items {
+    overflow-y: auto; /* Scroll bar appears if too many drinks */
+    flex-grow: 1;    /* Takes up available space */
+    margin-bottom: 15px;
+    padding-right: 5px; /* Space for the scrollbar */
+}
+
+/* Style the scrollbar to make it look cleaner */
+#cart-items::-webkit-scrollbar {
+    width: 6px;
+}
+#cart-items::-webkit-scrollbar-thumb {
+    background-color: #ccc;
     border-radius: 10px;
 }
 #clear-cart-btn {
