@@ -47,35 +47,32 @@ document.addEventListener('click', function(e) {
     const parent = e.target.closest('.product');
     const name = parent.getAttribute('data-name');
     const price = parseInt(parent.getAttribute('data-price'));
-    const img = parent.getAttribute('data-img'); // <--- CRITICAL: This grabs the URL
+    const img = parent.getAttribute('data-img');
 
     const existing = cartItems.find(i => i.name === name);
     if (existing) {
         existing.quantity++;
     } else {
-        // Ensure 'img' is being added to the new object
         cartItems.push({ name, price, img, quantity: 1 }); 
     }
     updateCartCount();
 }
 
-        // 5. Remove/Decrease Item Logic
+    // 5. Remove/Decrease Item Logic
     if (e.target.classList.contains('remove-item')) {
         const name = e.target.getAttribute('data-name');
         const itemIndex = cartItems.findIndex(i => i.name === name);
     
         if (itemIndex > -1) {
             if (cartItems[itemIndex].quantity > 1) {
-                // If more than 1, just decrease the count
                 cartItems[itemIndex].quantity--;
             } else {
-                // If it's the last one, remove it from the array
                 cartItems.splice(itemIndex, 1);
             }
         }
         
         updateCartCount();
-        showCart(); // Refresh the modal view
+        showCart();
     }
 
     // 2. Open Cart
@@ -90,18 +87,17 @@ document.addEventListener('click', function(e) {
 
      if (e.target.id === 'clear-cart-btn') {
         cartItems = [];
-        document.getElementById('cust-name').value = ''; // Clear name
-        document.getElementById('cust-email').value = ''; // Clear email
+        document.getElementById('cust-name').value = ''; 
+        document.getElementById('cust-email').value = ''; 
         updateCartCount();
         showCart();
     }
 
-            // 6. Checkout Logic
+    // 6. Checkout Logic (MODIFIED FOR FETCH)
     if (e.target.id === 'checkout-btn') {
         const nameInput = document.getElementById('cust-name').value.trim();
         const emailInput = document.getElementById('cust-email').value.trim();
     
-        // 1. Validation
         if (cartItems.length === 0) {
             alert("Your cart is empty!");
             return;
@@ -111,20 +107,52 @@ document.addEventListener('click', function(e) {
             return;
         }
     
-        // 2. Prepare order summary
         let orderSummary = cartItems.map(item => 
             `${item.name} (x${item.quantity}) - NT$ ${item.price * item.quantity}`
         ).join('\n');
     
         const grandTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
-        // 3. Fill the hidden form
-        document.getElementById('form-name').value = nameInput;
-        document.getElementById('form-email').value = emailInput;
-        document.getElementById('form-order-details').value = orderSummary;
-        document.getElementById('form-total-price').value = `NT$ ${grandTotal}`;
-    
-        // 4. Submit
-        document.getElementById('checkout-form').submit();
+        // Disable button to prevent double clicks
+        const btn = e.target;
+        btn.disabled = true;
+        btn.innerText = "Sending...";
+
+        // Prepare Data for Fetch
+        const formData = new FormData();
+        formData.append("Customer_Name", nameInput);
+        formData.append("Customer_Email", emailInput);
+        formData.append("Order_Details", orderSummary);
+        formData.append("Total_Price", `NT$ ${grandTotal}`);
+        formData.append("Payment_Method", "Cash");
+        formData.append("_subject", "New Drink Order!");
+        // This stops FormSubmit from showing its own "Thank You" page
+        formData.append("_captcha", "false"); 
+
+        // 4. Submit using Fetch (No Redirect)
+        fetch("https://formsubmit.co/ajax/rafaeldistribution811@gmail.com", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Thank you for your order!");
+                // Clear the cart
+                cartItems = [];
+                document.getElementById('cust-name').value = '';
+                document.getElementById('cust-email').value = '';
+                updateCartCount();
+                document.getElementById('cart-modal').style.display = 'none';
+            } else {
+                alert("Oops! There was a problem. You might be sending orders too fast.");
+            }
+        })
+        .catch(error => {
+            alert("Error: Could not connect to the server.");
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerText = "Submit Order";
+        });
     }
 });
