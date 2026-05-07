@@ -172,3 +172,75 @@ if (e.target.id === 'checkout-btn') {
         checkoutBtn.textContent = "Submit Order";
     });
 }
+let isLoginMode = true;
+
+// 7. Auth Logic
+document.addEventListener('click', function(e) {
+    const authModal = document.getElementById('auth-modal');
+    
+    // Open Modal
+    if (e.target.id === 'login-trigger-btn') {
+        if (e.target.textContent === 'Logout') {
+            localStorage.removeItem('currentUser');
+            location.reload(); // Refresh to reset
+            return;
+        }
+        authModal.style.display = 'block';
+    }
+
+    // Close Modal
+    if (e.target.classList.contains('close-auth') || e.target === authModal) {
+        authModal.style.display = 'none';
+    }
+
+    // Switch between Login and Register
+    if (e.target.id === 'auth-switch') {
+        isLoginMode = !isLoginMode;
+        document.getElementById('auth-title').textContent = isLoginMode ? 'Login' : 'Register';
+        document.getElementById('auth-submit-btn').textContent = isLoginMode ? 'Login' : 'Register';
+        e.target.textContent = isLoginMode ? "Don't have an account? Register" : "Already have an account? Login";
+    }
+
+    // Handle Submit
+    if (e.target.id === 'auth-submit-btn') {
+        const user = document.getElementById('auth-username').value.trim();
+        const pass = document.getElementById('auth-password').value.trim();
+
+        if (!user || !pass) return alert("Fill all fields");
+
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+
+        if (isLoginMode) {
+            // LOGIN logic
+            const foundUser = users.find(u => u.username === user && u.password === pass);
+            if (foundUser) {
+                localStorage.setItem('currentUser', user);
+                alert("Welcome back, " + user);
+                location.reload();
+            } else {
+                alert("Invalid credentials");
+            }
+        } else {
+            // REGISTER logic
+            if (users.find(u => u.username === user)) return alert("User exists!");
+            users.push({ username: user, password: pass });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Account created! Now please Login.");
+            // Switch back to login
+            document.getElementById('auth-switch').click();
+        }
+    }
+});
+
+// Check if user is already logged in on page load
+window.onload = function() {
+    const loggedInUser = localStorage.getItem('currentUser');
+    if (loggedInUser) {
+        document.getElementById('user-display').textContent = "Hi, " + loggedInUser;
+        document.getElementById('login-trigger-btn').textContent = "Logout";
+        // Auto-fill the email field in the checkout if you want
+        if(document.getElementById('cust-name')) {
+            document.getElementById('cust-name').value = loggedInUser;
+        }
+    }
+};
